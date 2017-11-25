@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>West2Online 2017 JavaScript Task 03</title>
+  </head>
+<body>
+
+  <ul id="burgers">
+      <li><span class="name">汉堡包</span><span class="price">￥7</span></li>
+      <li><span class="name">吉士汉堡包</span><span class="price">￥8</span></li>
+      <li><span class="name">双层吉士汉堡</span><span class="price">￥15.5</span></li>
+      <li><span class="name">麦香鸡</span><span class="price">￥9</span></li>
+      <li><span class="name">麦香鱼</span><span class="price">￥15.5</span></li>
+      <li><span class="name">麦辣鸡腿汉堡</span><span class="price">￥15</span></li>
+      <li><span class="name">培根蔬萃双层牛堡</span><span class="price">￥18</span></li>
+      <li><span class="name">巨无霸</span><span class="price">￥17</span></li>
+      <li><span class="name">原味板烧鸡腿堡</span><span class="price">￥16.5</span></li>
+      <li><span class="name">吉士蛋堡</span><span class="price">￥6</span></li>
+  </ul>
+
+  <ul id="burgers-sort">
+    <!--
+    <li>第一名：培根蔬萃双层牛堡：<b>18元</b></li>
+     -->
+  </ul>
+
+  <button id="sort-btn"  onclick="handleButton()">排序</button>
+
+  <script type="text/javascript">
+    var Num = ["第一名","第二名","第三名","第四名","第五名","第六名","第七名","第八名","第九名","第十名"];
+      /** 
+       * render
+       * 将排好序的汉堡价格，输出显示到id位burgers-sort的列表中
+       * 格式见ul中的注释的部分
+       */
+      function render (data) {
+
+        for(var num = 0;num<data.length;num++)
+        {
+           var y = document.createElement('li');
+           y.innerHTML=Num[num]+":"+data[num][0]+":"+data[num][1]+"元";
+           document.getElementById("burgers-sort").appendChild(y);
+        }
+      }
+
+      /**
+       * getData
+       * 读取id为burgers的列表，获取其中汉堡名字和价格
+       * 返回一个数组，格式见函数中示例
+       */
+      function getData () {
+        /**
+         * code here
+         */
+         var data=document.getElementById("burgers").getElementsByTagName("li");
+         var Data = new Array();
+         for(var i=0;i<10;i++)
+         {
+           Data[i]=new Array();
+           var a=data[i].childNodes;
+           Data[i][0]=a[0].innerHTML;
+           var t =(a[1].innerHTML).substring(1);
+           Data[i][1]=parseFloat(t);
+         }
+        /**
+         * data = [
+         *   ['汉堡包', 7],
+         *   ...
+         * ]
+         */
+        return Data;
+      }
+
+      /**
+       * sortBurgers
+       * 按汉堡价格，对data进行从大到小的排序
+       * 返回一个排序后的数组
+       */
+      function sortBurgers (data) {
+        for(var j=0;j<data.length-1;j++)
+        {
+           for(var i=1;i<data.length-j;i++)
+           {
+              if(data[i-1][1]<data[i][1])
+              {
+                   var x=data[i-1][1];
+                   data[i-1][1]=data[i][1];
+                   data[i][1]=x;
+              }
+            }
+        } 
+        return data;
+      }
+
+      function handleButton () {
+        var aqiData = getData();
+        var newData = sortBurgers(aqiData);
+        render(aqiData);
+        
+      }
+      // 给sort-btn绑定一个点击事件，点击时触发handleButton函数
+
+  </script>
+</body>
+</html>
